@@ -1,22 +1,22 @@
 #! /usr/bin/env python
 import praw
 import config
+import urllib2
 
 
 def bot_login():
+    """Login method."""
     print("logging in..")
-    try:
-        r = praw.Reddit(
-                        username=config.username,
-                        password=config.password,
-                        client_id=config.client_id,
-                        client_secret=config.client_secret,
-                        user_agent="Daily programmers challenge fetcher"
-                       )
-        print("Logged in!!")
-        return r
-    except:
-        print("Check wheather you are connected to the Internet?")
+    r = praw.Reddit(
+                    username=config.username,
+                    password=config.password,
+                    client_id=config.client_id,
+                    client_secret=config.client_secret,
+                    user_agent="Daily programmers challenge fetcher"
+                   )
+    print("Logged in!!")
+    return r
+
 
 def run_bot(r):
     print("Obtaining challenges...")
@@ -59,13 +59,26 @@ def print_challenges():
         print_challenges()
 
 
+def internet_on():
+    """Check Internet connection."""
+    try:
+        urllib2.urlopen('http://216.58.192.142', timeout=1)
+        return True
+    except urllib2.URLError:
+        return False
+
+        
 easy, medium, hard = [], [], []
 
 
 def main():
-    r = bot_login()
-    run_bot(r)
-    print_challenges()
+    check_internet = internet_on()
+    if check_internet:
+        r = bot_login()
+        run_bot(r)
+        print_challenges()
+    else:
+        print("No Internet connection detected!")
 
 
 if __name__ == "__main__":
