@@ -1,5 +1,3 @@
-This is a solution for Pybites Weekly Python Challenge#27
-
 This script will fetch each of Easy, Intermediate and Hard challenge from [r/dailyprogrammer](https://www.reddit.com/r/dailyprogrammer/)
 
 ## How to install
